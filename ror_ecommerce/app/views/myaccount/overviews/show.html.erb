@@ -1,0 +1,39 @@
+<div class='span-10 column'>
+  <h3> <%= current_user.name %> Profile </h3>
+
+  <ul id='profile_details' >
+    <li>
+      <label>Birth Date:</label>
+      <%= current_user.birth_date %>
+    </li>
+    <li>
+      <label>Email:</label>
+      <%= current_user.email %>
+    </li>
+
+    <li>
+      <%= link_to "Edit", edit_myaccount_overview_path() %>
+    </li>
+  </ul>
+</div>
+
+<div class='span-8 column'>
+  <div>
+    <h3> Address: </h3>
+    <% if current_user.shipping_address %>
+      <%= render :partial => '/shared/compact_address', :locals => { :shopping_address => current_user.shipping_address } %>
+      <%= link_to "Edit", edit_myaccount_address_path(current_user.shipping_address) %>
+    <% else %>
+      No Address Saved.<br/>
+      <%= link_to "New", new_myaccount_address_path() %>
+    <% end %>
+  </div>
+
+</div>
+
+<div class='span-6 last column'>
+  <div>
+    <h3> Store Credits: </h3>
+    <%= number_to_currency current_user.store_credit.amount %>
+  </div>
+</div>

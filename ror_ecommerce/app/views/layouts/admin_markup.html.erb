@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= site_name %></title>
+
+  <%#= stylesheet_link_tag :all %>
+  <%= stylesheet_link_tag 'sprite.css' %>
+  <%= stylesheet_link_tag 'admin.css' %>
+    <!--[if lt IE 8]
+  <%#= stylesheet_link_tag 'ie.css', :media => 'screen, projection'%>
+  <![endif]-->
+  <%= csrf_meta_tag %>
+
+  <%= javascript_include_tag 'application' %>
+  <%= yield :head %>
+</head>
+<body class="bp">
+  <div class="bp">
+    <%= raw "<p class='flash_notice'> #{notice}</p>"  if notice %>
+    <%= raw "<p class='flash_error'>#{alert}</p>"     if alert %>
+  </div>
+
+  <%= render :partial => 'shared/admin/header_bar' %>
+
+  <div class="container bp">
+
+    <% if  content_for? :header_sub_bar %>
+      <div id='header_sub_bar'>
+        <%= yield :header_sub_bar %>
+      </div>
+    <% end %>
+
+  </div>
+
+  <div class="container" style='width:1080px;'>
+    <div class=" content  span-24 last" style='width:1080px;'>
+      <div class=" column" style='<%= 'width:530px;' if  content_for? :sidebar %>'>
+        <%= yield %>
+      </div>
+      <% if  content_for? :sidebar %>
+        <%= yield :sidebar %>
+      <% end %>
+    </div>
+  </div>
+
+
+
+
+  <%= yield :bottom %>
+
+  <script>
+  jQuery(window).ready(
+    function() {
+      jQuery('.flash_notice').delay(6000).slideUp( 'slow');
+      jQuery('.flash_error').delay(6000).slideUp( 'slow');
+    }
+  );
+  </script>
+
+  <%# javascript_include_tag 'jquery/jquery-1.4.2.min' %>
+  <%#= javascript_include_tag 'jquery-1.4.2.min', 'rails' %>
+  <%#= javascript_include_tag :all, :cache => true %>
+</body>
+  <%= yield :below_body %>
+</html>
